@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap");
+
+th {
+  font-size: small;
+  font-weight: 500;
+}
+td {
+  font-size: small;
+}
