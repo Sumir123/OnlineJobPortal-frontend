@@ -34,7 +34,7 @@ const AdminLayout = ({ children }) => {
             <ul className="flex-1">
               <li>
                 <Link
-                  className="block py-2 px-4 hover:bg-gray-700"
+                  className={`block py-2 px-4 hover:bg-gray-700 `}
                   href="/admin/dashboard"
                 >
                   Dashboard

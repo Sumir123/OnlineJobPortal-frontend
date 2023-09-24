@@ -1,6 +1,6 @@
 import React from "react";
 
-const RenderPaginationButtons = ({ totalPage, currentPage, page, setPage }) => {
+const RenderPaginationButtons = ({ totalPage, currentPage, setPage }) => {
   const pagesToShow = 2;
   const buttons = [];
 
@@ -8,73 +8,35 @@ const RenderPaginationButtons = ({ totalPage, currentPage, page, setPage }) => {
     return buttons;
   }
 
-  if (totalPage <= 7) {
-    for (let i = 1; i <= totalPage; i++) {
-      buttons.push(
-        <div
-          key={i}
-          className={`bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md ${
-            i === currentPage ? "bg-slate-900" : ""
-          }`}
-          onClick={() => setPage(i)}
-        >
-          {i}
-        </div>
-      );
-    }
-  } else {
-    buttons.push(
-      <div
-        key={1}
-        className={`bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md ${
-          1 === currentPage ? "bg-slate-900" : ""
-        }`}
-        onClick={() => setPage(1)}
-      >
-        1
-      </div>
-    );
+  const renderPageButton = (pageNumber) => (
+    <div
+      key={pageNumber}
+      className={`bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md ${
+        pageNumber === currentPage ? "bg-slate-900" : ""
+      }`}
+      onClick={() => setPage(pageNumber)}
+    >
+      {pageNumber}
+    </div>
+  );
 
-    if (currentPage - pagesToShow > 2) {
-      buttons.push(<div key="start-ellipsis">...</div>);
-    }
+  buttons.push(renderPageButton(1));
 
-    for (
-      let i = currentPage - pagesToShow;
-      i <= currentPage + pagesToShow;
-      i++
-    ) {
-      if (i > 1 && i < totalPage) {
-        buttons.push(
-          <div
-            key={i}
-            className={`bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md ${
-              i === currentPage ? "bg-slate-900" : ""
-            }`}
-            onClick={() => setPage(i)}
-          >
-            {i}
-          </div>
-        );
-      }
-    }
-
-    if (currentPage + pagesToShow < totalPage - 1) {
-      buttons.push(<div key="end-ellipsis">...</div>);
-    }
-
-    buttons.push(
-      <div
-        key={totalPage}
-        className={`bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md ${
-          totalPage === currentPage ? "bg-slate-900" : ""
-        }`}
-        onClick={() => setPage(totalPage)}
-      >
-        {totalPage}
-      </div>
-    );
+  if (currentPage - pagesToShow > 2) {
+    buttons.push(<div key="start-ellipsis">...</div>);
   }
+
+  for (let i = currentPage - pagesToShow; i <= currentPage + pagesToShow; i++) {
+    if (i > 1 && i < totalPage) {
+      buttons.push(renderPageButton(i));
+    }
+  }
+
+  if (currentPage + pagesToShow < totalPage - 1) {
+    buttons.push(<div key="end-ellipsis">...</div>);
+  }
+
+  buttons.push(renderPageButton(totalPage));
 
   return buttons;
 };

@@ -4,41 +4,38 @@ import { useStoreState } from "../../../store";
 import { axiosAPI } from "../../../util/axiosAPI";
 import { useQuery } from "react-query";
 import { FaUser } from "react-icons/fa";
+import { getMyApplication } from "@/api";
+import ApplicationCard from "@/component/ApplicationCard";
 
 const ViewApplications = () => {
-  const { currentUser } = useStoreState();
+  const myApplications = useQuery("myApplications", getMyApplication);
 
-  const getEmployerJobsApplicants = () => {
-    const path = "/api/employer/" + currentUser?._id + "/applicants";
-    const method = "GET";
-
-    return axiosAPI(method, path);
-  };
-
-  const applicants = useQuery("applicants", getEmployerJobsApplicants);
-
-  const getApplicantsApplication = () => {
-    const path = "/api/application";
-    const method = "GET";
-    const params = { user_id: applicants?.data?.users?.[0]?._id };
-
-    return axiosAPI(method, path, {}, params);
-  };
-
-  const usersApplications = useQuery(
-    "usersApplications",
-    getApplicantsApplication
-  );
-
-  console.log(usersApplications?.data?.applications);
+  if (myApplications.isLoading) {
+    return (
+      <div className="flex px-4 flex-col">
+        <div>
+          <h1 className="font-semibold text-xl mb-4">View Applications</h1>
+        </div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
   return (
     <>
       <div className="flex px-4 flex-col">
         <div>
           <h1 className="font-semibold text-xl mb-4">View Applications</h1>
         </div>
-        <ul className="flex items-center gap-4">
-          <div>
+
+        <div>
+          <ApplicationCard
+            applications={myApplications?.data?.applications || []}
+          />
+        </div>
+        {Object.values(myApplications?.data?.applications || []).length ===
+          0 && <p>Sorry no-one has applied at the moment.</p>}
+
+        {/* <div>
             {applicants?.data?.users?.map((applicant) => (
               <li key={applicant?._id} className="py-4 flex items-center">
                 <div className="flex-shrink-0">
@@ -66,8 +63,8 @@ const ViewApplications = () => {
                 </div>
               </li>
             ))}
-          </div>
-          {/* <div className="flex-1">
+          </div> */}
+        {/* <div className="flex-1">
             {usersApplications?.data?.applications.map((application) => (
               <div className="flex">
                 <h1>job id: {application?.job_id}</h1>
@@ -78,12 +75,10 @@ const ViewApplications = () => {
               </div>
             ))}
           </div> */}
-        </ul>
       </div>
     </>
   );
 };
 
 ViewApplications.Layout = EmployerLayout;
-
 export default ViewApplications;

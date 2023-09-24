@@ -75,8 +75,8 @@ const LoginForm = () => {
         <title>Rojgar-Login</title>
       </Head>
       <div className="py-20">
-        <div className="border-gray-400 border-opacity-60 border rounded-xl p-20 w-2/5 flex flex-col mx-auto">
-          <h1 className="text-4xl font-bold mb-12">Log in to your account</h1>
+        <div className="border-gray-400 border-opacity-60 border rounded-xl py-10 px-20 w-2/5 flex flex-col mx-auto">
+          <h1 className="text-3xl font-bold mb-12">Log in to your account</h1>
           <Formik
             initialValues={{
               email: "",
@@ -144,12 +144,9 @@ const LoginForm = () => {
           </Formik>
           <div className="text-center mt-12 relative">
             <span className="absolute top-1/2 left-0 w-1/6 h-[1px] bg-gray-400"></span>
-            <Link
-              href="/forgot-password"
-              className="text-gray-600 hover:text-slate-900 relative z-10 px-4"
-            >
+            <span className="text-gray-600 hover:text-slate-900 relative z-10 px-4">
               Don't have an Upwork account?
-            </Link>
+            </span>
             <span className="absolute top-1/2 right-0 w-1/6 h-[1px] bg-gray-400"></span>
           </div>
 

@@ -53,7 +53,7 @@ const Posts = () => {
                   <th className="text-sm font-medium">Price</th>
                   <th className="text-sm font-medium">PaymentType</th>
                   <th className="text-sm font-medium">Category</th>
-                  <th className="text-sm font-medium">Action</th>
+                  {/* <th className="text-sm font-medium">Action</th> */}
                 </tr>
               </thead>
               <tbody className="text-xs">
@@ -69,16 +69,16 @@ const Posts = () => {
                     <td>{jobs.description}</td>
                     <td>{jobs.skills}</td>
                     <td>{jobs.price}</td>
-                    <td>{jobs["payment-type"]}</td>
+                    <td>{jobs["payment_type"]}</td>
                     <td>{jobs.category}</td>
-                    <td className="flex gap-2">
+                    {/* <td className="flex gap-2">
                       <button className="text-blue-500 hover:underline">
                         Edit
                       </button>
                       <button className="text-blue-500 hover:underline">
                         Delete
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

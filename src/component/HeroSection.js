@@ -26,7 +26,7 @@ const HeroSection = () => {
     return getCategories();
   });
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState("last");
 
   const { isLoading, data, isError, error } = useQuery({
     queryKey: ["jobs", page],
@@ -34,7 +34,11 @@ const HeroSection = () => {
       return getJobs(page);
     },
   });
-  console.log(data?.jobs);
+  const shuffledCategories = categoryData
+    ? categoryData.sort(() => Math.random() - 0.5)
+    : [];
+
+  const randomCategories = shuffledCategories.slice(0, 10);
   return (
     <>
       <div className="py-20 px-12  bg-gray-100">
@@ -127,17 +131,20 @@ const HeroSection = () => {
             </Link>
           </div>
           <ul className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {categoryData?.slice(0, 10)?.map((category) => (
-              <li
+            {randomCategories.map((category) => (
+              <Link
+                href={`/job/category/${category.name}`}
                 key={category.id}
                 className="md:text-xl bg-gray-200 font-semibold border border-gray-200 rounded-md px-4 py-2 hover:bg-gray-300 flex flex-col justify-between"
               >
-                <div className="">{category.name}</div>
-                <br />
-                <div className=" text-xs text-gray-700">
-                  {category.job_count} jobs
-                </div>
-              </li>
+                <li>
+                  <div className="">{category.name}</div>
+                  <br />
+                  <div className="text-xs text-gray-700">
+                    {category.job_count} jobs
+                  </div>
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
@@ -146,29 +153,32 @@ const HeroSection = () => {
             <h2 className="text-4xl font-semibold mb-6 font-header">
               Latest Job Openings
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-              {data?.jobs.slice(0, 6).map((job) => (
-                <Link
-                  key={job._id}
-                  href={`/job/${job._id}`}
-                  className="md:text-xl bg-gray-200 font-semibold border border-gray-200 rounded-md px-4 py-2 hover:bg-gray-300 flex flex-col justify-between text-slate-900"
-                >
-                  <div className="p-6 ">
-                    <h3 className="text-lg font-semibold text-[#4197E1] hover:text-blue-500 mb-2">
-                      {job.title}
-                    </h3>
-                    <div className="flex items-center  mb-2">
-                      <FaDollarSign className="w-4 h-4 mr-2" />
-                      <p className="text-sm">{job.price}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+              {data?.jobs
+                .reverse()
+                .slice(0, 6)
+                .map((job) => (
+                  <Link
+                    key={job._id}
+                    href={`/job/${job._id}`}
+                    className="md:text-xl bg-gray-200 font-semibold border border-gray-200 rounded-md px-4 py-2 hover:bg-gray-300 flex flex-col justify-between text-slate-900"
+                  >
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-[#4197E1] hover:text-blue-500 mb-2">
+                        {job.title}
+                      </h3>
+                      <div className="flex items-center  mb-2">
+                        <FaDollarSign className="w-4 h-4 mr-2" />
+                        <p className="text-sm">{job.price}</p>
+                      </div>
+                      <div className="flex items-center  mb-2">
+                        <FaCertificate className="w-4 h-4 mr-2" />
+                        <p className="text-sm">{job.category}</p>
+                      </div>
+                      <p className=" text-sm truncate">{job.description}</p>
                     </div>
-                    <div className="flex items-center  mb-2">
-                      <FaCertificate className="w-4 h-4 mr-2" />
-                      <p className="text-sm">{job.category}</p>
-                    </div>
-                    <p className=" text-sm truncate">{job.description}</p>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
             </div>
           </div>
         </div>

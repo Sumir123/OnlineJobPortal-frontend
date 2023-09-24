@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import * as Yup from "yup";
 import { useStoreState } from "../../../store";
 import AuthLayout from "@/Layout/AuthLayout";
+import { useQuery } from "react-query";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -46,11 +47,17 @@ const SignUpForm = () => {
       }
     }
   };
-  const dummyCategories = [
-    "Development & IT",
-    "Sales & Marketing",
-    "Design & Creative",
-  ];
+
+  const { getCategories } = useStoreState();
+  const {
+    isLoading,
+    data: categoryData,
+    isError,
+    error,
+  } = useQuery("categories", () => {
+    return getCategories();
+  });
+
   return (
     <>
       <div className="py-20">
@@ -183,9 +190,9 @@ const SignUpForm = () => {
                           </option>
                         )}
 
-                        {dummyCategories.map((category) => (
-                          <option key={category} value={category}>
-                            {category}
+                        {categoryData?.map((category) => (
+                          <option key={category?._id} value={category?.name}>
+                            {category?.name}
                           </option>
                         ))}
                       </Field>

@@ -29,7 +29,7 @@ const Users = () => {
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Role</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody className="">
@@ -45,14 +45,14 @@ const Users = () => {
                     <td>{users.phone}</td>
                     <td>{users.email}</td>
                     <td>{users.role}</td>
-                    <td className="flex gap-2">
+                    {/* <td className="flex gap-2">
                       <button className="text-blue-500 hover:underline">
                         edit
                       </button>
                       <button className="text-blue-500 hover:underline">
                         delete
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

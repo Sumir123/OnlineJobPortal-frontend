@@ -54,6 +54,7 @@ export const axiosAPI = async (
     options.cancelToken = cancelToken;
   }
   try {
+
     const response = await axios(path, options);
     return response?.data;
   } catch (error) {

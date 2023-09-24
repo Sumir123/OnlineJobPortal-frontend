@@ -28,13 +28,12 @@ const MainLayout = ({ children }) => {
     router.push("/account/login");
   };
 
-  const token = HandleCookies.getCookie("token");
-  if (token) {
-    const { data, isError, error, isLoading } = useQuery({
-      queryKey: ["currentUser"],
-      queryFn: getCurrentUser,
-    });
-  }
+  const { data, isError, error, isLoading } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    retry: false,
+    staleTime: 60000,
+  });
 
   const SearchBar = () => {
     return (
@@ -43,12 +42,12 @@ const MainLayout = ({ children }) => {
           <input
             type="text"
             placeholder="Search"
-            className="px-3 py-2 border outline-none rounded-3xl text-gray-500 focus:border-gray-400"
+            className="px-3 py-1 border outline-none rounded-3xl text-gray-500 focus:border-gray-400"
           />
         </form>
         <IoSearchOutline
-          className="absolute top-2 right-2 text-gray-400 cursor-pointer"
-          size={27}
+          className="absolute top-1 right-2 text-gray-400 cursor-pointer"
+          size={23}
           onClick={() => SearchBar(!SearchBar)}
         />
       </div>
@@ -79,7 +78,7 @@ const MainLayout = ({ children }) => {
     if (Object.keys(currentUser).length !== 0) {
       return (
         <>
-          <div className="flex items-center justify-center text-gray-500  text-center gap-4 relative">
+          <div className="flex items-center justify-center  text-gray-500  text-center gap-4 relative">
             <div className="relative" ref={menuRef}>
               <button
                 className="flex items-center justify-center gap-4 text-lg font-medium text-gray-700 hover:text-primary focus:outline-none"
@@ -159,90 +158,97 @@ const MainLayout = ({ children }) => {
 
   return (
     <>
-      <nav className="bg-slate-100 text-slate-900 z-100 border border-b-[#D4E1D5] fixed w-full">
-        <div className="px-4 md:px-12">
-          <div className="relative flex h-16 items-center justify-between">
-            {/* Mobile menu icon */}
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white duration-200 md:hidden"
-              onClick={handleMenuClick}
-            >
-              <span className="sr-only">Open main menu</span>
-              <IoMenu size={25} />
-            </button>
+      <nav className="bg-slate-100 text-slate-900 z-10 border-b border-b-[#D4E1D5] fixed w-full px-4 md:px-12 py-3">
+        <div className="flex items-center justify-between">
+          {/* Mobile menu icon */}
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white duration-200 md:hidden"
+            onClick={handleMenuClick}
+          >
+            <span className="sr-only">Open main menu</span>
+            <IoMenu size={25} />
+          </button>
 
-            <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start duration-200">
-              <Link href="/" passHref>
-                <Image
-                  className="block h-8 w-auto"
-                  src={Logo}
-                  alt="Rojgar Logo"
-                />
-              </Link>
-              <div className="hidden md:ml-6 md:block">
-                <div className="flex space-x-0">
-                  {(Object.keys(currentUser).length === 0 ||
-                    currentUser.role === "jobseeker") && (
-                    <Link
-                      href="/find-jobs"
-                      passHref
-                      className={`px-3 py-2 text-sm font-medium ${
-                        path === "/find-jobs" && "border-b border-slate-600"
-                      } hover:text-[#4197E1]`}
-                      aria-current="page"
-                    >
-                      Find Jobs
-                    </Link>
-                  )}
-                  {(Object.keys(currentUser).length === 0 ||
-                    currentUser.role === "employer") && (
-                    <Link
-                      href="/find-talent"
-                      passHref
-                      className={`px-3 py-2 text-sm font-medium ${
-                        path === "/find-talent" && "border-b border-slate-600"
-                      } hover:text-[#4197E1]`}
-                    >
-                      Find Talent
-                    </Link>
-                  )}
+          <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start duration-200">
+            <Link href="/" passHref>
+              <Image
+                className="block h-8 w-auto"
+                src={Logo}
+                alt="Rojgar Logo"
+              />
+            </Link>
+            <div className="hidden md:ml-6 md:block">
+              <div className="flex space-x-0">
+                {Object.keys(currentUser).length === 0 && (
                   <Link
-                    href="/job/category"
+                    href="/find-jobs"
                     passHref
                     className={`px-3 py-2 text-sm font-medium ${
-                      path === "/job/category" && "border-b border-slate-600"
+                      path === "/find-jobs" && "border-b border-slate-600"
+                    } hover:text-[#4197E1]`}
+                    aria-current="page"
+                  >
+                    Find Jobs
+                  </Link>
+                )}
+                {/* {(Object.keys(currentUser).length === 0 ||
+                  currentUser.role === "employer") && (
+                  <Link
+                    href="/find-talent"
+                    passHref
+                    className={`px-3 py-2 text-sm font-medium ${
+                      path === "/find-talent" && "border-b border-slate-600"
                     } hover:text-[#4197E1]`}
                   >
-                    Job Category
+                    Find Talent
                   </Link>
-                  {currentUser.role === "jobseeker" && (
-                    <Link
-                      href="#"
-                      passHref
-                      className={`px-3 py-2 text-sm font-medium ${
-                        path === "/find-talent" && "border-b border-slate-600"
-                      } hover:text-[#4197E1]`}
-                    >
-                      Applied jobs
-                    </Link>
-                  )}
-                  {/* <Link
+                )} */}
+                <Link
+                  href="/job/category"
+                  passHref
+                  className={`px-3 py-2 text-sm font-medium ${
+                    path === "/job/category" && "border-b border-slate-600"
+                  } hover:text-[#4197E1]`}
+                >
+                  Job Category
+                </Link>
+                {currentUser.role === "jobseeker" && (
+                  <Link
+                    href="/jobseeker/appliedJobs"
+                    passHref
+                    className={`px-3 py-2 text-sm font-medium ${
+                      path === "/jobseeker/appliedJobs" &&
+                      "border-b border-slate-600"
+                    } hover:text-[#4197E1]`}
+                  >
+                    Applied jobs
+                  </Link>
+                )}
+                {currentUser.role === "jobseeker" && (
+                  <Link
+                    href="/jobseeker/recomended-jobs"
+                    passHref
+                    className={`px-3 py-2 text-sm font-medium ${
+                      path === "/jobseeker/recomended-jobs" &&
+                      "border-b border-slate-600"
+                    } hover:text-[#4197E1]`}
+                  >
+                    Recommended jobs
+                  </Link>
+                )}
+                {/* <Link
                     href="#"
                     className="px-3 py-2 text-sm font-medium hover:text-[#4197E1]"
                     passHref
                   >
                     Contact us
                   </Link> */}
-                </div>
               </div>
             </div>
-
-            <div className="flex items-center gap-4">
-              <SearchBar />
-              {renderAuthButtons()}
-            </div>
           </div>
+
+          <div className="flex items-center gap-4">{renderAuthButtons()}</div>
         </div>
 
         {/* Mobile menu */}
@@ -291,7 +297,30 @@ const MainLayout = ({ children }) => {
       </nav>
       {/* <div className="py-20 px-12  bg-gray-100">{children}</div> */}
 
-      <main className="pt-12 ">{children}</main>
+      <main className="pt-11">{children}</main>
+
+      <footer className="bg-slate-900 text-slate-100 border-t-[#D4E1D5] py-4 px-6">
+        <div className="container mx-auto flex justify-between items-center">
+          <p className="text-sm">© 2023 Rojgar. All rights reserved.</p>
+          <ul className="flex space-x-4">
+            <li>
+              <a href="#" className="hover:text-gray-300">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-gray-300">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-gray-300">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </footer>
     </>
   );
 };

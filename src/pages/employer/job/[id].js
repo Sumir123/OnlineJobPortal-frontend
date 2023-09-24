@@ -1,24 +1,26 @@
-import { getApplication, getJobs, getUserProfile } from "@/api";
+import { getApplication, getJobs, getMyApplication } from "@/api";
 import ApplyModal from "@/component/modal/ApplyModal";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
-import { useStoreState } from "../../../store";
 import { ImPriceTag } from "react-icons/im";
+import { useStoreState } from "../../../../store";
+import EmployerLayout from "@/Layout/EmployerLayout";
 import { AiOutlineLeft } from "react-icons/ai";
-import ViewApplications from "../employer/viewApplications";
-import { toast } from "react-hot-toast";
-import useProfileCompletionToast from "@/Layout/useProfileCompletionToast";
+import EditJobModal from "@/component/modal/EditJobModal";
+import ViewApplications from "../viewApplications";
+import ApplicationCard from "@/component/ApplicationCard";
+import DeleteJobModal from "@/component/modal/DeleteJobModal";
 
 const JobDetails = () => {
   const router = useRouter();
   const { id } = router.query;
 
   const { currentUser, getCategories } = useStoreState();
-  const [openApplyModal, setOpenApplyModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
- 
   const {
     isLoading: categoryLoading,
     data: categoryData,
@@ -33,7 +35,7 @@ const JobDetails = () => {
   const randomCategories = shuffledCategories.slice(0, 10);
 
   const { isLoading, data, isError, error } = useQuery({
-    queryKey: ["jobs"],
+    queryKey: ["job", id],
     queryFn: () => {
       return getJobs({ id: id });
     },
@@ -57,10 +59,12 @@ const JobDetails = () => {
     Array.isArray(job?.skills) || job?.skills?.length === 0
       ? job?.skills
       : job?.skills?.split(",")?.slice(0, 5);
+
+  const myApplications = useQuery("myApplications", getMyApplication);
   return (
     <>
-      <div className="flex flex-col md:flex-row pt-8 px-8 items-baseline">
-        <div className="md:w-3/4 w-full px-8 pb-8 ">
+      <div className="flex flex-col md:flex-row pt-4 px-8 items-baseline">
+        <div className=" w-full pb-8 ">
           <div
             className="flex gap-2 items-center text-gray-500 hover:text-black cursor-pointer"
             onClick={() => {
@@ -69,7 +73,24 @@ const JobDetails = () => {
           >
             <AiOutlineLeft /> back
           </div>
-          <h2 className="text-2xl font-medium mb-4">Job Details</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-medium mb-4">Job Details</h2>
+            <div className="flex gap-2">
+              <button
+                className="bg-blue-500 text-white font-semibold px-4 py-0.5 rounded"
+                onClick={() => setOpenEditModal(true)}
+              >
+                Edit
+              </button>
+
+              <button
+                className="bg-red-500 text-white font-semibold px-4 py-0.5 rounded"
+                onClick={() => setOpenDeleteModal(true)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
           <div className="border p-6 rounded-lg">
             <h3 className="text-xl font-medium text-gray-800 mb-5">
               {job?.title}
@@ -126,49 +147,29 @@ const JobDetails = () => {
           </div>
         </div>
         {/* Sidebar */}
-        <div className="flex flex-col justify-center border-l-2 border-gray-300  px-8 py-8 md:w-1/4 md:px-4">
-          {currentUser && Object.keys(currentUser).length !== 0 ? (
-            !hasApplied ? (
-              <button
-                className="bg-blue-500 text-white font-semibold py-2 px-4 rounded"
-                onClick={() => setOpenApplyModal(true)}
-              >
-                Apply Now
-              </button>
-            ) : (
-              <div className="italic text-center">Applied Successfully</div>
-            )
-          ) : (
-            <div className="italic text-center">Login To Apply</div>
-          )}
-
-          <h2 className="text-gray-600 font-bold text-lg mt-8 mb-4">
-            Job Categories
-          </h2>
-          <ul className="list-none">
-            {randomCategories.map((category) => (
-              <Link
-                href={`/job/category/${category.name}`}
-                key={category.id}
-                className="flex items-center justify-between cursor-pointer
-                rounded-md px-4 py-2 hover:bg-gray-50"
-              >
-                <li>
-                  <div>{category.name}</div>
-                </li>
-              </Link>
-            ))}
-          </ul>
-        </div>
       </div>
+      <div className="px-8"></div>
 
-      {openApplyModal && (
-        <ApplyModal onClose={() => setOpenApplyModal(false)} job={job} />
+      {openEditModal && (
+        <EditJobModal
+          onClose={() => setOpenEditModal(false)}
+          job={job}
+          id={id}
+        />
+      )}
+
+      {openDeleteModal && (
+        <DeleteJobModal
+          onClose={() => setOpenDeleteModal(false)}
+          job={job}
+          id={id}
+        />
       )}
     </>
   );
 };
 
+JobDetails.Layout = EmployerLayout;
 export default JobDetails;
 
 function getTimeDifference(dateString) {

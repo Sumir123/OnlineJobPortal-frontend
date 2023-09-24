@@ -7,7 +7,7 @@ import { axiosAPI } from "../../../util/axiosAPI";
 
 const Metric = ({ icon, label, value }) => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow">
+    <div className="bg-white p-4 rounded-lg border shadow-sm">
       <div className="flex items-center">
         <div className="flex-shrink-0">{icon}</div>
         <div className="ml-4">
@@ -22,7 +22,7 @@ const Metric = ({ icon, label, value }) => {
 const RecentApplicants = () => {
   const { currentUser } = useStoreState();
   const getEmployerJobsApplicants = () => {
-    const path = "/api/employer/" + currentUser?._id + "/applicants";
+    const path = "/api/employer/" + currentUser._id + "/applicants";
     const method = "GET";
 
     return axiosAPI(method, path);
@@ -30,7 +30,6 @@ const RecentApplicants = () => {
 
   const applicants = useQuery("applicants", getEmployerJobsApplicants);
 
-  console.log("applicants", applicants?.data);
   return (
     <div>
       <h3 className="text-lg font-medium text-gray-900 mb-4">

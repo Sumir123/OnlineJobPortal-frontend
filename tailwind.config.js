@@ -16,6 +16,11 @@ module.exports = {
       header: ["Bruno Ace SC"],
       body: ['"Open Sans"'],
     },
+    extend: {
+      colors: {
+        primary: "#4197E1",
+      },
+    },
   },
   plugins: [],
 };

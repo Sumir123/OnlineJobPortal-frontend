@@ -68,7 +68,7 @@ const Categories = () => {
           ) : isError ? (
             <h1> {error.message}</h1>
           ) : (
-            <table className="border-collapse  text-left w-full ">
+            <table className="border-collapse  text-left w-full mb-20">
               <thead className="bg-slate-600 text-gray-300 ">
                 <tr>
                   <th>S.N</th>
@@ -88,9 +88,7 @@ const Categories = () => {
                     <td>{category.name}</td>
 
                     <td className="flex gap-2">
-                      <button className="text-blue-500 hover:underline">
-                        edit
-                      </button>
+                     
                       <button
                         className="text-blue-500 hover:underline"
                         onClick={() => handleDelete(category._id)}

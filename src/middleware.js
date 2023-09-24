@@ -18,8 +18,9 @@ const middleware = async (request) => {
         return NextResponse.next();
       }
       if (
-        url.pathname === "/jobseeker/dashboard" ||
-        url.pathname === "/employer/dashboard" ||
+        url.pathname.includes("/jobseeker/") ||
+        url.pathname.includes("/employer/") ||
+        url.pathname.includes("/account/profile") ||
         url.pathname.includes("/admin/")
       ) {
         url.pathname = "/account/login";

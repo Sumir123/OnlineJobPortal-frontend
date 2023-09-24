@@ -6,20 +6,19 @@ export const createAuthSlice = (set, get) => ({
   userTokenData: [],
 
   setCurrentUser: (currentUser) => {
-    console.log(currentUser);
 
     set({ currentUser: currentUser });
   },
 
   getCurrentUser: async () => {
-    console.log("getting user info....");
+
     try {
       const method = "GET";
       const path = `/me`;
       const res = await axiosAPI(method, path);
 
       set({ currentUser: res });
-      console.log("finished getting user info...");
+  
       return res;
     } catch (error) {
       throw error;
@@ -43,7 +42,6 @@ export const createAuthSlice = (set, get) => ({
   },
 
   clearAllUserData: () => {
-    console.log("Clearing cookies...");
 
     HandleCookies.removeCookie("token");
     HandleCookies.removeCookie("userdata");

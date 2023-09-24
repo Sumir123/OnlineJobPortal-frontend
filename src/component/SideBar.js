@@ -1,6 +1,6 @@
 function Sidebar() {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="bg-white border shadow rounded-lg overflow-hidden">
       <div className="px-6 py-4">
         <h3 className="text-lg font-semibold mb-2">Filter Jobs</h3>
         <hr className="my-4" />

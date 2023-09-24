@@ -2,13 +2,15 @@ import { categoryData } from "@/data/categoryData";
 import Head from "next/head";
 import { useStoreState } from "../../../store";
 import { useQuery } from "react-query";
+import Link from "next/link";
+import useProfileCompletionToast from "@/Layout/useProfileCompletionToast";
 
 const JobCategory = () => {
-  const { getCategories } = useStoreState();
+  const { currentUser, getCategories } = useStoreState();
   const { isLoading, data, isError, error } = useQuery("categories", () => {
     return getCategories();
   });
-
+  if (currentUser.role === "jobseeker") useProfileCompletionToast();
   return (
     <>
       <Head>
@@ -18,7 +20,7 @@ const JobCategory = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="pt-8 px-12">
-        <h1 className="text-3xl font-bold mb-4">Job Categories</h1>
+        <h1 className="text-xl font-semibold text-gray-900 mb-6">Categories</h1>
         <ul className="grid grid-cols-2 gap-4 w-full">
           {isLoading ? (
             <h2>Loading...</h2>
@@ -27,12 +29,19 @@ const JobCategory = () => {
           ) : (
             <>
               {data.map((category, index) => (
-                <li
-                  key={category.id}
-                  className="cursor-pointer  rounded-md px-4 py-2 bg-white shadow"
+                <Link
+                  href={`/job/category/${category.name}`}
+                  key={category._id}
+                  className="cursor-pointer  rounded-md px-4 py-2 bg-white border shadow-sm hover:bg-gray-100"
                 >
-                  <span>{category.name}</span>
-                </li>
+                  <li>
+                    <div className="font-medium">{category.name}</div>
+                    <br />
+                    <div className="text-xs text-gray-700">
+                      {category.job_count} jobs
+                    </div>
+                  </li>
+                </Link>
               ))}
             </>
           )}

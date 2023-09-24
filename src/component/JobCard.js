@@ -1,6 +1,8 @@
+import Link from "next/link";
 import React from "react";
 
 const JobCard = ({
+  id,
   title,
   company,
   location,
@@ -20,11 +22,19 @@ const JobCard = ({
   };
 
   const slicedDescription = sliceDescription(description, 25);
-
+  const skillsArray =
+    Array.isArray(skills) || skills?.length === 0
+      ? skills
+      : skills?.split(",")?.slice(0, 5);
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 flex flex-col justify-between">
+    <div
+      key={id}
+      className="bg-gray-50 mb-4 rounded-lg shadow p-4 flex flex-col justify-between"
+    >
       <div className="header">
-        <h3 className="text-xl font-bold mb-2">{title}</h3>
+        <Link href={`/job/${id}`}>
+          <h3 className="text-xl font-bold mb-2">{title}</h3>
+        </Link>
         <p className="text-sm text-gray-500 mb-1">{company}</p>
         <p className="text-sm text-gray-500 mb-1">{location}</p>
         <p className="text-sm text-gray-500 mb-1">{type}</p>
@@ -44,7 +54,7 @@ const JobCard = ({
         <div className="mb-2">
           <span className="text-gray-500 text-sm mr-2">Skills:</span>
           <div className="flex gap-2 flex-wrap">
-            {skills.slice(0, 5).map((skill) => (
+            {skillsArray?.map((skill) => (
               <span
                 className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-sm"
                 key={skill}

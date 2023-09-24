@@ -34,7 +34,7 @@ const Applications = () => {
                   <th>Job ID</th>
                   <th>Resume Filename</th>
                   <th>Cover Letter Filename</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -54,7 +54,7 @@ const Applications = () => {
                         }
                         target="_blank"
                       >
-                        {application.resume_filename.replace("uploads\\","")}
+                        {application.resume_filename.replace("uploads\\", "")}
                       </a>
                     </td>
                     <td>
@@ -70,14 +70,14 @@ const Applications = () => {
                         {application.cover_letter_filename}
                       </a>
                     </td>
-                    <td className="flex gap-2">
+                    {/* <td className="flex gap-2">
                       <button className="text-blue-500 hover:underline">
                         edit
                       </button>
                       <button className="text-blue-500 hover:underline">
                         delete
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
