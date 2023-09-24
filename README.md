@@ -1,4 +1,4 @@
-[image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/2f218683-5f3c-464a-b403-eac31a716f8e)
+![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/2f218683-5f3c-464a-b403-eac31a716f8e)
 
 ![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/8b08e5ac-62e1-44c7-b070-5a344600f60e)
 
