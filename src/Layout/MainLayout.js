@@ -1,15 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { FaUser } from "react-icons/fa";
-import { IoMenu, IoSearchOutline } from "react-icons/io5";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { useStoreState } from "../../store";
-import HandleCookies from "../../util/handleCookie";
-import Logo from "../images/favicon2.png";
+import { IoMenu, IoSearchOutline } from "react-icons/io5";
 import { useQuery } from "react-query";
+import { useStoreState } from "../../store";
+import Logo from "../images/favicon2.png";
 
 const MainLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,7 +77,7 @@ const MainLayout = ({ children }) => {
     if (Object.keys(currentUser).length !== 0) {
       return (
         <>
-          <div className="flex items-center justify-center  text-gray-500  text-center gap-4 relative">
+          <div className="flex items-center justify-center  text-gray-500 text-center gap-4 relative">
             <div className="relative" ref={menuRef}>
               <button
                 className="flex items-center justify-center gap-4 text-lg font-medium text-gray-700 hover:text-primary focus:outline-none"
@@ -158,96 +157,86 @@ const MainLayout = ({ children }) => {
 
   return (
     <>
-      <nav className="bg-slate-100 text-slate-900 z-10 border-b border-b-[#D4E1D5] fixed w-full px-4 md:px-12 py-3">
-        <div className="flex items-center justify-between">
-          {/* Mobile menu icon */}
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white duration-200 md:hidden"
-            onClick={handleMenuClick}
-          >
-            <span className="sr-only">Open main menu</span>
-            <IoMenu size={25} />
-          </button>
+      <nav className="bg-slate-100 text-slate-900 z-10 shadow-md sticky px-4 md:px-12 py-5">
+        <div className="flex items-center justify-between ">
+          <div className="flex">
+            {/* Mobile menu icon */}
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white duration-200 md:hidden"
+              onClick={handleMenuClick}
+            >
+              <span className="sr-only">Open main menu</span>
+              <IoMenu size={25} />
+            </button>
 
-          <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start duration-200">
-            <Link href="/" passHref>
-              <Image
-                className="block h-8 w-auto"
-                src={Logo}
-                alt="Rojgar Logo"
-              />
-            </Link>
-            <div className="hidden md:ml-6 md:block">
-              <div className="flex space-x-0">
-                {Object.keys(currentUser).length === 0 && (
+            <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start duration-200">
+              <Link href="/" passHref>
+                <Image
+                  className="block h-8 w-auto"
+                  src={Logo}
+                  alt="Rojgar Logo"
+                />
+              </Link>
+              <div className="hidden md:ml-6 md:block">
+                <div className="flex space-x-0">
+                  {Object.keys(currentUser).length === 0 && (
+                    <Link
+                      href="/find-jobs"
+                      passHref
+                      className={`px-3 py-2 text-sm font-medium ${
+                        path === "/find-jobs" && "border-b border-slate-600"
+                      } hover:text-[#4197E1]`}
+                      aria-current="page"
+                    >
+                      Find Jobs
+                    </Link>
+                  )}
+
                   <Link
-                    href="/find-jobs"
+                    href="/job/category"
                     passHref
                     className={`px-3 py-2 text-sm font-medium ${
-                      path === "/find-jobs" && "border-b border-slate-600"
-                    } hover:text-[#4197E1]`}
-                    aria-current="page"
-                  >
-                    Find Jobs
-                  </Link>
-                )}
-                {/* {(Object.keys(currentUser).length === 0 ||
-                  currentUser.role === "employer") && (
-                  <Link
-                    href="/find-talent"
-                    passHref
-                    className={`px-3 py-2 text-sm font-medium ${
-                      path === "/find-talent" && "border-b border-slate-600"
+                      path === "/job/category" && "border-b border-slate-600"
                     } hover:text-[#4197E1]`}
                   >
-                    Find Talent
+                    Job Category
                   </Link>
-                )} */}
-                <Link
-                  href="/job/category"
-                  passHref
-                  className={`px-3 py-2 text-sm font-medium ${
-                    path === "/job/category" && "border-b border-slate-600"
-                  } hover:text-[#4197E1]`}
-                >
-                  Job Category
-                </Link>
-                {currentUser.role === "jobseeker" && (
-                  <Link
-                    href="/jobseeker/appliedJobs"
-                    passHref
-                    className={`px-3 py-2 text-sm font-medium ${
-                      path === "/jobseeker/appliedJobs" &&
-                      "border-b border-slate-600"
-                    } hover:text-[#4197E1]`}
-                  >
-                    Applied jobs
-                  </Link>
-                )}
-                {currentUser.role === "jobseeker" && (
-                  <Link
-                    href="/jobseeker/recomended-jobs"
-                    passHref
-                    className={`px-3 py-2 text-sm font-medium ${
-                      path === "/jobseeker/recomended-jobs" &&
-                      "border-b border-slate-600"
-                    } hover:text-[#4197E1]`}
-                  >
-                    Recommended jobs
-                  </Link>
-                )}
-                {/* <Link
+                  {currentUser.role === "jobseeker" && (
+                    <Link
+                      href="/jobseeker/appliedJobs"
+                      passHref
+                      className={`px-3 py-2 text-sm font-medium ${
+                        path === "/jobseeker/appliedJobs" &&
+                        "border-b border-slate-600"
+                      } hover:text-[#4197E1]`}
+                    >
+                      Applied jobs
+                    </Link>
+                  )}
+                  {currentUser.role === "jobseeker" && (
+                    <Link
+                      href="/jobseeker/recomended-jobs"
+                      passHref
+                      className={`px-3 py-2 text-sm font-medium ${
+                        path === "/jobseeker/recomended-jobs" &&
+                        "border-b border-slate-600"
+                      } hover:text-[#4197E1]`}
+                    >
+                      Recommended jobs
+                    </Link>
+                  )}
+                  {/* <Link
                     href="#"
                     className="px-3 py-2 text-sm font-medium hover:text-[#4197E1]"
                     passHref
                   >
                     Contact us
                   </Link> */}
+                </div>
               </div>
             </div>
           </div>
-
           <div className="flex items-center gap-4">{renderAuthButtons()}</div>
         </div>
 
@@ -297,12 +286,12 @@ const MainLayout = ({ children }) => {
       </nav>
       {/* <div className="py-20 px-12  bg-gray-100">{children}</div> */}
 
-      <main className="pt-11">{children}</main>
+      <main className="">{children}</main>
 
-      <footer className="bg-slate-900 text-slate-100 border-t-[#D4E1D5] py-4 px-6">
-        <div className="container mx-auto flex justify-between items-center">
-          <p className="text-sm">© 2023 Rojgar. All rights reserved.</p>
-          <ul className="flex space-x-4">
+      <footer className="bg-slate-900 text-slate-100 py-10 px-4 md:px-12">
+        <div className="flex justify-between items-center">
+          <p className="">© 2023 Rojgar. All rights reserved.</p>
+          <ul className="md:flex space-x-4 items-center hidden ">
             <li>
               <a href="#" className="hover:text-gray-300">
                 Home

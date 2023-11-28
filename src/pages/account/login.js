@@ -1,4 +1,4 @@
-import CryptoJS from "crypto-js";
+import AuthLayout from "@/Layout/AuthLayout";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Head from "next/head";
 import Link from "next/link";
@@ -11,7 +11,6 @@ import { IoLockClosed } from "react-icons/io5";
 import * as Yup from "yup";
 import { useStoreState } from "../../../store";
 import HandleCookies from "../../../util/handleCookie";
-import AuthLayout from "@/Layout/AuthLayout";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -34,19 +33,12 @@ const LoginForm = () => {
       const userData = await loginUser(uData);
 
       HandleCookies.setCookieJson("token", userData?.access_token);
-      // document.cookie = `token=${JSON.stringify(
-      //   userData?.access_token
-      // )};path=/; SameSite=None; Secure`;
 
       if (userData?.access_token) {
         setUserTokenData(userData.access_token);
 
         const currentuserdata = await getCurrentUser();
         HandleCookies.setCookieJson("userdata", currentuserdata);
-
-        // document.cookie = `userdata=${JSON.stringify(
-        //   currentuserdata
-        // )};path=/; SameSite=None; Secure`;
 
         const role = currentuserdata.role;
 
@@ -74,9 +66,11 @@ const LoginForm = () => {
       <Head>
         <title>Rojgar-Login</title>
       </Head>
-      <div className="py-20">
-        <div className="border-gray-400 border-opacity-60 border rounded-xl py-10 px-20 w-2/5 flex flex-col mx-auto">
-          <h1 className="text-3xl font-bold mb-12">Log in to your account</h1>
+      <div className="py-10 px-4 md:px-12">
+        <div className="border-gray-400 border-opacity-60 border rounded-xl  p-5 md:px-20 md:w-2/5 flex flex-col mx-auto">
+          <h1 className="text-xl md:text-3xl font-bold mb-12">
+            Log in to your account
+          </h1>
           <Formik
             initialValues={{
               email: "",
@@ -144,7 +138,7 @@ const LoginForm = () => {
           </Formik>
           <div className="text-center mt-12 relative">
             <span className="absolute top-1/2 left-0 w-1/6 h-[1px] bg-gray-400"></span>
-            <span className="text-gray-600 hover:text-slate-900 relative z-10 px-4">
+            <span className="text-gray-600 hover:text-slate-900 relative z-10 px-4 whitespace-nowrap">
               Don't have an Upwork account?
             </span>
             <span className="absolute top-1/2 right-0 w-1/6 h-[1px] bg-gray-400"></span>

@@ -5,7 +5,7 @@ import Image from "next/image";
 const AuthLayout = ({ children }) => {
   return (
     <>
-      <div className="absolute left-12 top-4">
+      <div className=" text-slate-900 z-10 shadow-md  sticky px-4 md:px-12 py-3">
         <Link href="/" passHref>
           <Image className="block h-8 w-auto" src={Logo} alt="Rojgar Logo" />
         </Link>

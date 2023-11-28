@@ -60,16 +60,16 @@ const SignUpForm = () => {
 
   return (
     <>
-      <div className="py-20">
+      <div className="py-10 px-4 md:px-12">
         {!userType ? (
           <>
-            <div className=" bg-white shadow border-t-2 rounded-xl py-10 px-20 w-2/5 flex flex-col mx-auto">
-              <h1 className="text-2xl font-bold mb-10">
+            <div className=" bg-white shadow border-t-2 rounded-xl p-5 md:px-20 md:w-2/5 flex flex-col mx-auto">
+              <h1 className="text-xl md:text-3xl font-bold mb-12">
                 Join as a jobseeker or employer:
               </h1>
-              <div className="flex gap-4 items-center justify-center">
+              <div className="flex gap-2 whitespace-nowrap items-center justify-center">
                 <button
-                  className="px-6 py-3 text-lg font-medium text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
+                  className="px-4 py-3 text-lg font-medium text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
                   onClick={() => setUserType("jobseeker")}
                 >
                   Job Seeker
@@ -85,7 +85,7 @@ const SignUpForm = () => {
           </>
         ) : (
           <>
-            <div className="fixed text-sm right-12 top-20">
+            <div className="absolute md:fixed text-sm right-5 top-16">
               {userType == "jobseeker"
                 ? "Join as employer? "
                 : "Join as job seeker? "}
@@ -98,7 +98,7 @@ const SignUpForm = () => {
                 {userType == "jobseeker" ? " employer" : " job seeker"}
               </button>
             </div>
-            <div className="border-gray-400 border-opacity-60 border rounded-xl py-10 px-20 w-2/5 flex flex-col mx-auto">
+            <div className="border-gray-400 border-opacity-60 border rounded-xl py-10 px-10 md:px-20 md:w-2/5 flex flex-col mx-auto">
               <h1 className="text-2xl font-bold mb-4">
                 {userType === "jobseeker"
                   ? "Sign up to find work you love"
