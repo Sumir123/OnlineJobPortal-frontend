@@ -1,50 +1,39 @@
-![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/2f218683-5f3c-464a-b403-eac31a716f8e)
+# Online Job Portal
 
-![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/8b08e5ac-62e1-44c7-b070-5a344600f60e)
+![Image 1](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/0d2c0051-cc1b-4f79-9320-6bbc7ee9b2a7)
 
-![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/f3f4918b-b8b3-4036-9531-bcdb916fd9d9)
+![Image 2](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/8b08e5ac-62e1-44c7-b070-5a344600f60e)
 
-![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/08dd358d-38bc-41ca-9717-dddfced05cee)
+![Image 3](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/f3f4918b-b8b3-4036-9531-bcdb916fd9d9)
 
-![image](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/c6ec4c81-6f7e-4d73-9391-cbf229d60d82)
+![Image 4](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/08dd358d-38bc-41ca-9717-dddfced05cee)
 
+![Image 5](https://github.com/Sumir123/OnlineJobPortal-frontend/assets/71181873/c6ec4c81-6f7e-4d73-9391-cbf229d60d82)
 
+**Description:**
+Online Job Portal is a web application built using Next.js with Zustand for efficient state management. The application offers a straightforward and user-friendly interface, catering to both employers and job seekers.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Features:
 
-## Getting Started
+- **Job Posting for Employers:**
+  - Employers can easily post job listings through a simple interface.
+  
+- **Job Application for Job Seekers:**
+  - Job seekers can browse posted jobs and apply seamlessly.
+  
+- **Efficient State Management:**
+  - Zustand is employed for robust state management, ensuring a smooth user experience.
 
-First, run the development server:
+## Technologies Used:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- **Next.js:**
+  - The application is built using Next.js, providing a fast and efficient web development experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Zustand:**
+  - Zustand is utilized for state management, offering a lightweight yet powerful solution.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Getting Started:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/online-job-portal.git
