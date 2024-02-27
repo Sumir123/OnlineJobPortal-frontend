@@ -34,37 +34,69 @@ function Card({ data, page, setPage, handlePrevPage, handleNextPage }) {
                         ? "/employer" + `/job/${job?._id}`
                         : `/job/${job?._id}`
                     }
-                    className="hover:text-blue-400"
+                    className="hover:text-blue-400 hover:underline duration-300"
                   >
-                    <h3 className="text-lg font-semibold mb-2">{job?.title}</h3>
+                    <h3 className="text-[20px] font-semibold mb-2 tracking-wide">
+                      {job?.title}
+                    </h3>
                   </Link>
                 </div>
-                <div className="flex items-center mb-2">
-                  <p className="text-gray-600 text-sm">
-                    {typeof job?.price === "number"
-                      ? `Rs ${job?.price}`
-                      : job?.price}
-                  </p>
-                </div>
+                {job?.price !== undefined && (
+                  <div className="flex gap-2 items-center mb-2">
+                    <p className="text-gray-700 text-sm font-semibold">
+                      {job?.["payment_type"] === "Fixed-price" ? (
+                        <span className=" mr-1 font-bold">Contract</span>
+                      ) : job?.["payment_type"] === "Hourly" ? (
+                        <span className=" mr-1 font-bold">Part-time</span>
+                      ) : (
+                        <span className=" mr-1 font-bold">Full-time</span>
+                      )}
+                    </p>
+                    <p className="text-gray-700 text-sm font-semibold">
+                      {typeof job?.price === "number" ? (
+                        <>
+                          <span className="mr-1 ">
+                            {job?.["payment_type"]}:
+                          </span>
+                          <span className="mr-1 font-bold">
+                            Rs.{job?.price.toLocaleString("en-IN")}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="mr-1 font-bold">
+                            {job?.["payment_type"]}:
+                          </span>
+                          Rs.{job?.price.toLocaleString("en-IN")}
+                        </>
+                      )}
+                    </p>
+                  </div>
+                )}
 
                 <div className="py-4">
-                  <p className="text-gray-600 text-sm leading-snug">
+                  <p className="text-gray-600 font text-sm leading-snug tracking-wide">
                     {job?.description.length > 200
-                      ? job?.description.substring(0, 200) + " ....."
+                      ? job?.description.substring(0, 400) + " ....."
                       : job?.description}
                   </p>
                 </div>
 
                 <div className="text-gray-600 text-sm flex items-center justify-between">
                   <div>
-                    {skillsArray?.map((skill) => (
+                    {skillsArray?.slice(0, 5).map((skill) => (
                       <span
                         key={skill}
-                        className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm inline-block mr-2 mb-2"
+                        className="border font-medium text-gray-800 px-3 py-1 rounded-full text-sm inline-block mr-2 mb-2"
                       >
                         {skill}
                       </span>
                     ))}
+                    {skillsArray?.length > 5 && (
+                      <span className="text-gray-500 ml-2">
+                        +{skillsArray.length - 5} more
+                      </span>
+                    )}
                   </div>
                   <p>{job?.timestamp && getTimeDifference(job?.timestamp)}</p>
                 </div>

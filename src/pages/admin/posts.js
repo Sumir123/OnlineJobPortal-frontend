@@ -1,8 +1,12 @@
 import AdminLayout from "@/Layout/AdminLayout";
-import { useQuery } from "react-query";
-import { useStoreState } from "../../../store";
-import { useState } from "react";
+import { deleteJob } from "@/api";
 import RenderPaginationButtons from "@/component/pagination/RenderPaginationButtons";
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useStoreState } from "../../../store";
+import Link from "next/link";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { toast } from "react-hot-toast";
 
 const Posts = () => {
   const { getJobs } = useStoreState();
@@ -18,11 +22,33 @@ const Posts = () => {
   const currentPage = data?.current_page;
 
   const handlePrevPage = () => {
-    setPage((prev) => prev - 1);
+    setPage((prev) => Math.max(prev - 1, 1));
   };
 
   const handleNextPage = () => {
-    setPage((prev) => prev + 1);
+    setPage((prev) => Math.min(prev + 1, totalPage));
+  };
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((job_id) => deleteJob(job_id), {
+    onSuccess: (response) => {
+      toast.success(response.message);
+      queryClient.invalidateQueries(["jobs", page]);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+  });
+
+  const handleDelete = (job_id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this application?"
+    );
+    if (confirmed) {
+      mutation.mutate(job_id);
+    }
   };
 
   return (
@@ -43,17 +69,17 @@ const Posts = () => {
             <table className="border-collapse text-sm mb-10 text-left w-full ">
               <thead className="bg-slate-600 text-base  text-gray-300">
                 <tr className="">
-                  <th className="text-sm font-medium">S.N</th>
-                  {/* <th>jobs ID</th>
+                  <th className="text-sm font-medium p-2">S.N</th>
+                  {/* <th>jobs ID</th> */}
 
-                  <th>Employer ID</th> */}
-                  <th className="text-sm font-medium">Title</th>
-                  <th className="text-sm font-medium">Description</th>
-                  <th className="text-sm font-medium">Skills</th>
-                  <th className="text-sm font-medium">Price</th>
-                  <th className="text-sm font-medium">PaymentType</th>
-                  <th className="text-sm font-medium">Category</th>
-                  {/* <th className="text-sm font-medium">Action</th> */}
+                  <th>Employer ID</th>
+                  <th className="text-sm font-medium p-2">Title</th>
+                  <th className="text-sm font-medium p-2">Description</th>
+                  <th className="text-sm font-medium p-2">Skills</th>
+                  <th className="text-sm font-medium p-2">Price</th>
+                  <th className="text-sm font-medium p-2">PaymentType</th>
+                  <th className="text-sm font-medium p-2">Category</th>
+                  <th className="text-sm font-medium p-2">Action</th>
                 </tr>
               </thead>
               <tbody className="text-xs">
@@ -62,23 +88,30 @@ const Posts = () => {
                     key={jobs._id}
                     className="border-b border-gray-200 hover:bg-gray-100"
                   >
-                    <td>{(page - 1) * 10 + index + 1}</td>
-                    {/* <td>{jobs._id}</td>
-                    <td>{jobs.employer_id}</td> */}
-                    <td>{jobs.title}</td>
-                    <td>{jobs.description}</td>
-                    <td>{jobs.skills}</td>
-                    <td>{jobs.price}</td>
-                    <td>{jobs["payment_type"]}</td>
-                    <td>{jobs.category}</td>
-                    {/* <td className="flex gap-2">
-                      <button className="text-blue-500 hover:underline">
-                        Edit
-                      </button>
-                      <button className="text-blue-500 hover:underline">
+                    <td className="p-2">{(page - 1) * 10 + index + 1}</td>
+                    {/* <td  className="p-2">{jobs._id}</td> */}
+                    <td className="p-2">
+                      <Link
+                        className="text-blue-600 hover:underline"
+                        href={"/admin/user/" + jobs.employer_id}
+                      >
+                        {jobs.employer_id}
+                      </Link>
+                    </td>
+                    <td className="p-2">{jobs.title}</td>
+                    <td className="p-2">{jobs.description}</td>
+                    <td className="p-2">{jobs.skills}</td>
+                    <td className="p-2">{jobs.price}</td>
+                    <td className="p-2">{jobs["payment_type"]}</td>
+                    <td className="p-2">{jobs.category}</td>
+                    <td className="p-2">
+                      <button
+                        className="text-blue-500 hover:underline"
+                        onClick={() => handleDelete(jobs._id)}
+                      >
                         Delete
                       </button>
-                    </td> */}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -86,10 +119,11 @@ const Posts = () => {
             <div className="pagination py-10  ">
               <div className="flex justify-center gap-4">
                 <div
-                  className="prev-btn cursor-pointer"
+                  className="prev-btn flex items-center bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md "
                   onClick={handlePrevPage}
                 >
-                  {"<<"}
+                  <AiOutlineLeft />
+                  <span>Prev</span>
                 </div>
                 <RenderPaginationButtons
                   totalPage={totalPage}
@@ -99,10 +133,11 @@ const Posts = () => {
                 />
 
                 <div
-                  className="prev-btn cursor-pointer"
+                  className="prev-btn flex items-center bg-slate-600 cursor-pointer text-slate-100 px-2 py-0.5 rounded-md "
                   onClick={handleNextPage}
                 >
-                  {">>"}
+                  <span>Next</span>
+                  <AiOutlineRight />
                 </div>
               </div>
             </div>

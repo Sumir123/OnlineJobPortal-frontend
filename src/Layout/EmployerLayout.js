@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { FaBriefcase, FaDashcube, FaNetworkWired, FaUserFriends } from 'react-icons/fa';
-import { FiLogOut } from 'react-icons/fi';
-import { QueryClient, useQuery } from 'react-query';
-import { useStoreState } from '../../store';
-import Logo from '../images/favicon2.png';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import {
+  FaBriefcase,
+  FaDashcube,
+  FaNetworkWired,
+  FaUserFriends,
+} from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
+import { QueryClient, useQuery } from "react-query";
+import { useStoreState } from "../../store";
+import Logo from "../images/favicon2.png";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const EmployerLayout = ({ children }) => {
   const { currentUser, clearAllUserData, getCurrentUser } = useStoreState();
@@ -15,17 +20,21 @@ const EmployerLayout = ({ children }) => {
 
   const handleLogout = () => {
     clearAllUserData();
-    router.push('/account/login');
+    router.push("/account/login");
   };
 
   const { data, error, isError, isLoading } = useQuery({
-    queryKey: ['currentUser'],
+    queryKey: ["currentUser"],
     queryFn: getCurrentUser,
   });
 
   return (
     <div className="flex h-screen">
-      <aside className={`bg-gray-800 text-white flex-shrink-0 w-1/3 md:w-1/6 ${showSidebar ? 'block' : 'hidden'} md:block`}>
+      <aside
+        className={`bg-gray-800 text-white flex-shrink-0 w-1/3 md:w-1/6 ${
+          showSidebar ? "block" : "hidden"
+        } md:block`}
+      >
         <nav className="py-4 px-4 flex flex-col overflow-y-auto h-full">
           <div className="flex-1">
             <Link href="/">
@@ -36,7 +45,7 @@ const EmployerLayout = ({ children }) => {
               />
             </Link>
             <ul className="space-y-4">
-            <Link
+              <Link
                 className={`flex items-center py-2 px-4 space-x-2 cursor-pointer ${
                   router.pathname === "/employer/dashboard"
                     ? "text-white"
@@ -103,7 +112,7 @@ const EmployerLayout = ({ children }) => {
           onClick={() => setShowSidebar(!showSidebar)}
         >
           <svg
-            className={`w-6 h-6 ${showSidebar ? 'hidden' : 'block'}`}
+            className={`w-6 h-6`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

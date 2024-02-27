@@ -98,12 +98,18 @@ const HeroSection = () => {
               </div>
             </div>
             <div className="flex gap-4 py-5">
-              <button className="bg-[#4197E1] px-6 py-2 text-gray-50 rounded-3xl hover:bg-[#2586db]">
+              <Link
+                href="/account/signup"
+                className="bg-[#4197E1] px-6 py-2 text-gray-50 rounded-3xl hover:bg-[#2586db]"
+              >
                 Signup for free
-              </button>
-              <button className="border-[#4197E1] border-2  px-6 py-2 text-[#4197E1] rounded-3xl hover:bg-slate-200">
+              </Link>
+              <Link
+                href="/account/signup"
+                className="border-[#4197E1] border-2  px-6 py-2 text-[#4197E1] rounded-3xl hover:bg-slate-200"
+              >
                 Learn to hire
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -111,7 +117,7 @@ const HeroSection = () => {
         <div className="bg-slate-100  md:py-14">
           <div className="flex justify-between items-center mb-6 ">
             <h1 className="text-xl md:text-2xl text-blue-500  font-semibold font-header">
-              Browse talent by category
+              Browse Jobs by category
             </h1>
             <Link href="/job/category" className="text-blue-500">
               see all

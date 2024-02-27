@@ -255,7 +255,7 @@ const MainLayout = ({ children }) => {
               Find Jobs
             </Link>
           )}
-          {(Object.keys(currentUser).length === 0 ||
+          {/* {(Object.keys(currentUser).length === 0 ||
             currentUser.role === "employer") && (
             <Link
               href="/find-talent"
@@ -263,13 +263,31 @@ const MainLayout = ({ children }) => {
             >
               Find Talent
             </Link>
-          )}
+          )} */}
           <Link
-            href="/job_category"
+            href="/job/category"
             className="block px-4 py-2 text-base font-medium hover:bg-gray-700 hover:text-white"
           >
             Job Category
           </Link>
+          {currentUser.role === "jobseeker" && (
+            <Link
+              href="/jobseeker/appliedJobs"
+              passHref
+              className="block px-4 py-2 text-base font-medium hover:bg-gray-700 hover:text-white"
+            >
+              Applied jobs
+            </Link>
+          )}
+          {currentUser.role === "jobseeker" && (
+            <Link
+              href="/jobseeker/recomended-jobs"
+              passHref
+              className="block px-4 py-2 text-base font-medium hover:bg-gray-700 hover:text-white"
+            >
+              Recommended jobs
+            </Link>
+          )}
           {/* <Link
             href="#"
             className="block px-4 py-2 text-base font-medium hover:bg-gray-700 hover:text-white"

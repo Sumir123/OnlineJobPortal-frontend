@@ -18,7 +18,6 @@ const JobDetails = () => {
   const { currentUser, getCategories } = useStoreState();
   const [openApplyModal, setOpenApplyModal] = useState(false);
 
- 
   const {
     isLoading: categoryLoading,
     data: categoryData,
@@ -62,7 +61,7 @@ const JobDetails = () => {
       <div className="flex flex-col md:flex-row pt-8 px-8 items-baseline">
         <div className="md:w-3/4 w-full px-8 pb-8 ">
           <div
-            className="flex gap-2 items-center text-gray-500 hover:text-black cursor-pointer"
+            className="flex gap-2 pb-6  items-center text-gray-500 hover:text-black cursor-pointer"
             onClick={() => {
               router.back();
             }}
@@ -70,8 +69,8 @@ const JobDetails = () => {
             <AiOutlineLeft /> back
           </div>
           <h2 className="text-2xl font-medium mb-4">Job Details</h2>
-          <div className="border p-6 rounded-lg">
-            <h3 className="text-xl font-medium text-gray-800 mb-5">
+          <div className="border p-6 rounded-lg pb-10">
+            <h3 className="text-xl font-medium text-gray-800 mb-5 tracking-wide">
               {job?.title}
             </h3>
             <div className="text-slate-400 text-sm mb-4">
@@ -84,7 +83,7 @@ const JobDetails = () => {
             <div className="my-4">
               {job && job?.description && (
                 <p
-                  className="text-sm text-gray-600"
+                  className="text-sm text-gray-600 tracking-wide"
                   dangerouslySetInnerHTML={{
                     __html: job.description
                       .replace(/\n/g, "<br>")
@@ -100,7 +99,9 @@ const JobDetails = () => {
                   <ImPriceTag size={15} />
                 </div>
                 <div>
-                  <p className=" font-medium">{job?.price}</p>
+                  <p className=" font-medium">
+                    Rs. {job?.price?.toLocaleString("en-IN")}
+                  </p>
                   <p className="text-gray-400 text-xs">
                     {job?.["payment_type"]}
                   </p>
@@ -116,7 +117,7 @@ const JobDetails = () => {
                 {skillsArray?.map((skill) => (
                   <span
                     key={skill}
-                    className="bg-gray-200 text-gray-800 px-[10px] py-[3px] rounded-full text-[12px]"
+                    className="border font-medium text-gray-800 px-3 py-1 rounded-full text-sm inline-block mr-2 mb-2"
                   >
                     {skill}
                   </span>
@@ -126,7 +127,7 @@ const JobDetails = () => {
           </div>
         </div>
         {/* Sidebar */}
-        <div className="flex flex-col justify-center border-l-2 border-gray-300  px-8 py-8 md:w-1/4 md:px-4">
+        <div className="flex flex-col justify-center md:border-l-2 border-gray-300  px-8 md:w-1/4 ">
           {currentUser && Object.keys(currentUser).length !== 0 ? (
             !hasApplied ? (
               <button

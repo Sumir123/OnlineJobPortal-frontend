@@ -49,12 +49,7 @@ const SignUpForm = () => {
   };
 
   const { getCategories } = useStoreState();
-  const {
-    isLoading,
-    data: categoryData,
-    isError,
-    error,
-  } = useQuery("categories", () => {
+  const { data: categoryData } = useQuery("categories", () => {
     return getCategories();
   });
 
@@ -67,7 +62,7 @@ const SignUpForm = () => {
               <h1 className="text-xl md:text-3xl font-bold mb-12">
                 Join as a jobseeker or employer:
               </h1>
-              <div className="flex gap-2 whitespace-nowrap items-center justify-center">
+              <div className="flex gap-10 whitespace-nowrap items-center justify-center">
                 <button
                   className="px-4 py-3 text-lg font-medium text-white bg-blue-500 rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
                   onClick={() => setUserType("jobseeker")}
@@ -120,7 +115,11 @@ const SignUpForm = () => {
                 {({ isSubmitting }) => (
                   <Form className="flex flex-col gap-3">
                     <div className="flex flex-col">
-                      <label htmlFor="name">Full Name</label>
+                      <label htmlFor="name">
+                        {userType === "jobseeker"
+                          ? "Full Name"
+                          : "Organization Name"}
+                      </label>
                       <Field
                         type="text"
                         name="name"
@@ -138,7 +137,9 @@ const SignUpForm = () => {
                     </div>
 
                     <div className="flex flex-col">
-                      <label htmlFor="email">Email</label>
+                      <label htmlFor="email">
+                        {userType === "jobseeker" ? "Email" : "Official Email"}
+                      </label>
                       <Field
                         type="email"
                         name="email"
@@ -226,7 +227,7 @@ const SignUpForm = () => {
                 )}
               </Formik>
               <div className="mt-4 mx-auto text-center">
-                Already have an account?{" "}
+                Already have an account?
                 <Link href="/account/login" className="text-blue-500">
                   Log In
                 </Link>

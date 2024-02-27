@@ -29,13 +29,15 @@ const Dashboard = () => {
       }
     },
   });
+  const totalPage = data?.total_pages;
+  const currentPage = data?.current_page;
 
   const handlePrevPage = () => {
-    setPage((prev) => prev - 1);
+    setPage((prev) => Math.max(prev - 1, 1));
   };
 
   const handleNextPage = () => {
-    setPage((prev) => prev + 1);
+    setPage((prev) => Math.min(prev + 1, totalPage));
   };
 
   const handleSearch = (e) => {

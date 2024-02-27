@@ -1,7 +1,8 @@
 import EmployerLayout from "@/Layout/EmployerLayout";
+import { getMyApplication } from "@/api";
 import { useEffect, useState } from "react";
 import { FaBriefcase, FaUser, FaUserFriends } from "react-icons/fa";
-import { useQueries, useQuery, useQueryClient } from "react-query";
+import { useQueries, useQuery } from "react-query";
 import { useStoreState } from "../../../store";
 import { axiosAPI } from "../../../util/axiosAPI";
 
@@ -20,37 +21,33 @@ const Metric = ({ icon, label, value }) => {
 };
 
 const RecentApplicants = () => {
-  const { currentUser } = useStoreState();
-  const getEmployerJobsApplicants = () => {
-    const path = "/api/employer/" + currentUser._id + "/applicants";
-    const method = "GET";
-
-    return axiosAPI(method, path);
-  };
-
-  const applicants = useQuery("applicants", getEmployerJobsApplicants);
+  const applicants = useQuery("myApplications", getMyApplication);
 
   return (
     <div>
-      <h3 className="text-lg font-medium text-gray-900 mb-4">
-        Recent Applicants
-      </h3>
-      <ul className="divide-y divide-gray-200">
-        {applicants?.data?.users?.map((applicant) => (
-          <li key={applicant?._id} className="py-4 flex items-center">
-            <div className="flex-shrink-0">
-              <FaUser size={24} className="text-gray-500" />
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900">
-                {applicant?.name}
-              </p>
-              <p className="text-sm text-gray-500">{applicant?.phone}</p>
-              <p className="text-sm text-gray-500">{applicant?.email}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {applicants?.data?.users?.length > 0 && (
+        <>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Recent Applicants
+          </h3>
+          <ul className="divide-y divide-gray-200">
+            {applicants?.data?.users?.map((applicant) => (
+              <li key={applicant?._id} className="py-4 flex items-center">
+                <div className="flex-shrink-0">
+                  <FaUser size={24} className="text-gray-500" />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-900">
+                    {applicant?.name}
+                  </p>
+                  <p className="text-sm text-gray-500">{applicant?.phone}</p>
+                  <p className="text-sm text-gray-500">{applicant?.email}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };
@@ -64,13 +61,6 @@ const EmployerDashboard = () => {
     const params = { employer_id: currentUser?._id, page: page };
 
     return axiosAPI(method, path, {}, params);
-  };
-
-  const getEmployerApplications = () => {
-    const path = `/api/employer/${currentUser?._id}/applications`;
-    const method = "GET";
-
-    return axiosAPI(method, path);
   };
 
   const [page, setPage] = useState(1);
@@ -87,7 +77,7 @@ const EmployerDashboard = () => {
     },
     {
       queryKey: ["applications", page],
-      queryFn: () => getEmployerApplications(page),
+      queryFn: () => getMyApplication(page),
       enabled: !!currentUser?._id,
     },
   ]);
@@ -110,13 +100,8 @@ const EmployerDashboard = () => {
           <Metric
             icon={<FaUserFriends className="text-gray-500" size={24} />}
             label="Total Applicants"
-            value={applicationsQuery?.data?.length || 0}
+            value={applicationsQuery?.data?.total_applicants || 0}
           />
-          {/* <Metric
-            icon={<FaRegClock className="text-gray-500" size={24} />}
-            label="Average Time to Hire"
-            value="14 days"
-          /> */}
         </div>
         <div className="mt-8">
           <RecentApplicants />

@@ -68,27 +68,26 @@ const Categories = () => {
           ) : isError ? (
             <h1> {error.message}</h1>
           ) : (
-            <table className="border-collapse  text-left w-full mb-20">
+            <table className="border-collapse text-left w-full mb-20">
               <thead className="bg-slate-600 text-gray-300 ">
                 <tr>
-                  <th>S.N</th>
-                  <th>id</th>
-                  <th>Name</th>
-                  <th>Action</th>
+                  <th className="p-2">S.N</th>
+                  {/* <th className="p-2">id</th> */}
+                  <th className="p-2">Name</th>
+                  <th className="p-2">Action</th>
                 </tr>
               </thead>
               <tbody className="">
                 {data.map((category, index) => (
                   <tr
-                    key={category.id}
+                    key={index}
                     className="border-b border-gray-100 hover:bg-gray-100"
                   >
-                    <td>{index + 1}</td>
-                    <td>{category._id}</td>
-                    <td>{category.name}</td>
+                    <td className="p-2">{index + 1}</td>
+                    {/* <td>{category._id}</td> */}
+                    <td className="p-2">{category.name}</td>
 
-                    <td className="flex gap-2">
-                     
+                    <td className="p-2 flex gap-2">
                       <button
                         className="text-blue-500 hover:underline"
                         onClick={() => handleDelete(category._id)}

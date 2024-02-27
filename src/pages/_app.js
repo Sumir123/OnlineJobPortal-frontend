@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import MainLayout from "@/Layout/MainLayout";
 import { QueryClientProvider, QueryClient } from "react-query";
-// import { ReactQueryDevtools } from "react-query/devtools";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function MyApp({ Component, pageProps }) {
   const Layout = Component?.Layout || MainLayout;
@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
       </QueryClientProvider>
     </>
   );

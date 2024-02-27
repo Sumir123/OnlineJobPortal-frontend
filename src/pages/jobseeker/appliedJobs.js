@@ -6,7 +6,9 @@ import useProfileCompletionToast from "@/Layout/useProfileCompletionToast";
 
 const AppliedJobs = () => {
   const { currentUser } = useStoreState();
+
   useProfileCompletionToast();
+
   const applicationData = useQuery({
     queryKey: ["MyApplication"],
     queryFn: getApplication,
@@ -62,7 +64,7 @@ const AppliedJobs = () => {
                       href={`http://localhost:4000/api/application/resume/${application._id}`}
                       target="_blank"
                     >
-                      {application.resume_filename}
+                      {application.resume_filename.replace("uploads\\", "")}
                     </Link>
                   </td>
                   <td className="py-4 px-6 border-b border-gray-200">
@@ -71,7 +73,10 @@ const AppliedJobs = () => {
                       href={`http://localhost:4000/api/application/cover_letter/${application._id}`}
                       target="_blank"
                     >
-                      {application.cover_letter_filename}
+                      {application.cover_letter_filename.replace(
+                        "uploads\\",
+                        ""
+                      )}
                     </Link>
                   </td>
                 </tr>

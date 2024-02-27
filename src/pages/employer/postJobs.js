@@ -1,9 +1,8 @@
 import EmployerLayout from "@/Layout/EmployerLayout";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useMutation, useQuery, queryClient } from "react-query";
+import { queryClient, useMutation, useQuery } from "react-query";
 import * as Yup from "yup";
 import { useStoreState } from "../../../store";
 import { axiosAPI } from "../../../util/axiosAPI";
@@ -223,8 +222,8 @@ const postJobs = () => {
               </Form>
             </Formik>
           </div>
-          <div className="w-[15%] overflow-hidden  ">
-            <img src="/illustration.avif" className="max-w-full h-auto" />
+          <div className="w-[40%] overflow-hidden  ">
+            <img src="/illustration.avif" className=" h-auto" />
           </div>
         </div>
       </div>

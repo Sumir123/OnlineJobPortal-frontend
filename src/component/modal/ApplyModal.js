@@ -32,6 +32,7 @@ const ApplyModal = ({ onClose, job }) => {
     onSuccess: (response) => {
       toast.success(response?.message);
       queryClient.invalidateQueries("MyApplication");
+      queryClient.invalidateQueries("jobs");
       onClose();
     },
     onError: (error) => {

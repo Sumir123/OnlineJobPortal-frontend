@@ -1,4 +1,3 @@
-import { URLSearchParams } from "next/dist/compiled/@edge-runtime/primitives/url";
 import { axiosAPI } from "../../util/axiosAPI";
 
 export const getUserProfile = async () => {
@@ -24,9 +23,22 @@ export const getApplication = async () => {
   const method = "GET";
   return await axiosAPI(method, path);
 };
+
+export const deleteApplication = async (application_id) => {
+  const path = "/api/delete_application";
+  const method = "DELETE";
+  return await axiosAPI(method, path, {}, { application_id });
+};
+
 export const getMyApplication = async () => {
-  const path = "/api/application";
+  const path = "/api/my_applicants";
   const method = "GET";
+  return await axiosAPI(method, path);
+};
+export const getapplicationAggregration = async () => {
+  const path = "/api/applications/aggregation_data";
+  const method = "GET";
+
   return await axiosAPI(method, path);
 };
 
@@ -34,6 +46,12 @@ export const getJobs = async (parms) => {
   const path = "/api/jobs";
   const method = "GET";
   return await axiosAPI(method, path, {}, parms);
+};
+
+export const deleteJob = async (job_id) => {
+  const path = "/api/jobs/" + job_id;
+  const method = "DELETE";
+  return await axiosAPI(method, path);
 };
 
 export const getRecommendedJobs = async (parms) => {

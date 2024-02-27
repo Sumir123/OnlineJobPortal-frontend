@@ -1,11 +1,7 @@
 import EmployerLayout from "@/Layout/EmployerLayout";
-import React from "react";
-import { useStoreState } from "../../../store";
-import { axiosAPI } from "../../../util/axiosAPI";
-import { useQuery } from "react-query";
-import { FaUser } from "react-icons/fa";
 import { getMyApplication } from "@/api";
 import ApplicationCard from "@/component/ApplicationCard";
+import { useQuery } from "react-query";
 
 const ViewApplications = () => {
   const myApplications = useQuery("myApplications", getMyApplication);
@@ -29,11 +25,12 @@ const ViewApplications = () => {
 
         <div>
           <ApplicationCard
-            applications={myApplications?.data?.applications || []}
+            applications={myApplications?.data?.applicants || []}
           />
         </div>
-        {Object.values(myApplications?.data?.applications || []).length ===
-          0 && <p>Sorry no-one has applied at the moment.</p>}
+        {Object.values(myApplications?.data?.applicants || []).length === 0 && (
+          <p>Sorry no-one has applied at the moment.</p>
+        )}
 
         {/* <div>
             {applicants?.data?.users?.map((applicant) => (
